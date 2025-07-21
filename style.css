@@ -533,3 +533,37 @@ footer p {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+.hidden-images {
+            display: none;
+        }
+        .toggle-button {
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background-color: #d94da9;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.toggle-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d62828;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+  background-color: #a61b1b;
+}

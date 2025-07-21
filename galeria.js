@@ -1,3 +1,16 @@
+function toggleImages(sectionId) {
+    const hiddenSection = document.querySelector(`#${sectionId} .${sectionId}-hidden`);
+    const button = document.querySelector(`#${sectionId} .toggle-button`);
+
+    if (!hiddenSection || !button) return;
+
+    const isHidden = hiddenSection.classList.contains('hidden-images');
+
+    hiddenSection.classList.toggle('hidden-images');
+
+    button.textContent = isHidden ? 'Pokaż mniej' : 'Pokaż więcej';
+  }
+
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.createElement('div');
   overlay.className = 'lightbox-overlay';
