@@ -10,7 +10,7 @@
 <header>
     <h1>ŚWIĄTECZNA OFERTA NELINO</h1>
     <nav class="main-nav">
-        <button type="button" onclick="location.href='#lampiony'">Oferty Lampiony</button>
+        <button type="button" onclick="location.href='#lampiony'">Oferty Świeczniki</button>
         <button type="button" onclick="location.href='#bombki'">Oferty Bombki</button>
         <button type="button" onclick="location.href='#bombki-z-logo'">Oferty Bombki z logo</button>
         <button type="button" onclick="location.href='#figurki'">Oferty Figurki</button>
@@ -24,175 +24,191 @@
 <main>
     <!-- Sekcja LAMPIONY -->
     <section class="section" id="lampiony">
-        <h2>LAMPIONY NA STOJAKU</h2>
-        <p>Ręcznie malowane lampiony na stojaku. Wykonane ze szkła, idealne na wieczorny nastrój.</p>
-        <p class="highlight">1 ROZMIAR | Stojak – 20 cm. Kula – 17 cm.</p>
-        <div class="image-grid">
-            <figure>
-                <a href="lampion1.png" class="lightbox"><img src="lampion1.png" alt="lampion 1" loading="lazy"></a>
-                <figcaption>Lampion 1</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion2.png" class="lightbox"><img src="lampion2.png" alt="lampion 2" loading="lazy"></a>
-                <figcaption>Lampion 2</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion3.png" class="lightbox"><img src="lampion3.png" alt="lampion 3" loading="lazy"></a>
-                <figcaption>Lampion 3</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion4.png" class="lightbox"><img src="lampion4.png" alt="lampion 4" loading="lazy"></a>
-                <figcaption>Lampion 4</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion5.png" class="lightbox"><img src="lampion5.png" alt="lampion 5" loading="lazy"></a>
-                <figcaption>Lampion 5</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion6.png" class="lightbox"><img src="lampion6.png" alt="lampion 6" loading="lazy"></a>
-                <figcaption>Lampion 6</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion7.png" class="lightbox"><img src="lampion7.png" alt="lampion 7" loading="lazy"></a>
-                <figcaption>Lampion 7</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion8.png" class="lightbox"><img src="lampion8.png" alt="lampion 8" loading="lazy"></a>
-                <figcaption>Lampion 8</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion9.png" class="lightbox"><img src="lampion9.png" alt="lampion 9" loading="lazy"></a>
-                <figcaption>Lampion 9</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion10.png" class="lightbox"><img src="lampion10.png" alt="lampion 10" loading="lazy"></a>
-                <figcaption>Lampion 10</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion11.png" class="lightbox"><img src="lampion11.png" alt="lampion 11" loading="lazy"></a>
-                <figcaption>Lampion 11</figcaption>
-            </figure>
-            <figure>
-                <a href="lampion12.png" class="lightbox"><img src="lampion12.png" alt="lampion 12" loading="lazy"></a>
-                <figcaption>Lampion 12</figcaption>
-            </figure>
-            <div class="image-grid hidden-images lampiony-hidden">
-                <!-- lampion13+ opcjonalnie -->
-                <figure>
-                    <a href="lampion13.png" class="lightbox"><img src="lampion13.png" alt="lampion 13"
-                                                                  loading="lazy"></a>
-                    <figcaption>Lampion 13</figcaption>
-                </figure>
-                <figure>
-                    <a href="lampion14.png" class="lightbox"><img src="lampion14.png" alt="lampion 14"
-                                                                  loading="lazy"></a>
-                    <figcaption>Lampion 14</figcaption>
-                </figure>
-            </div>
-            <div class="toggle-wrapper">
-                <button class="toggle-button" onclick="toggleImages('lampiony')">Pokaż więcej</button>
-            </div>
+        <h2>ŚWIECZNIKI NA STOJAKU</h2>
+        <p>Świeczniki są ręcznie malowane to bombka powieszona na stojaku, pięknie podkreśla świąteczny klimat, wykonane z wysokiej jakości szkła.
+            Dostępne jest wiele kolorów.</p>
+        <p class="highlight"><strong> 1 ROZMIAR <br> <br> Stojak – 20 cm | Kula – 17 cm. </strong></p>
+        <div class="image-grid" id="lampiony-grid">
+            <!--            <figure>-->
+            <!--                <a href="lampion1.png" class="lightbox"><img src="lampion1.png" alt="lampion 1" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 1</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion2.png" class="lightbox"><img src="lampion2.png" alt="lampion 2" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 2</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion3.png" class="lightbox"><img src="lampion3.png" alt="lampion 3" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 3</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion4.png" class="lightbox"><img src="lampion4.png" alt="lampion 4" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 4</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion5.png" class="lightbox"><img src="lampion5.png" alt="lampion 5" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 5</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion6.png" class="lightbox"><img src="lampion6.png" alt="lampion 6" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 6</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion7.png" class="lightbox"><img src="lampion7.png" alt="lampion 7" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 7</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion8.png" class="lightbox"><img src="lampion8.png" alt="lampion 8" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 8</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion9.png" class="lightbox"><img src="lampion9.png" alt="lampion 9" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 9</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion10.png" class="lightbox"><img src="lampion10.png" alt="lampion 10" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 10</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion11.png" class="lightbox"><img src="lampion11.png" alt="lampion 11" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 11</figcaption>-->
+            <!--            </figure>-->
+            <!--            <figure>-->
+            <!--                <a href="lampion12.png" class="lightbox"><img src="lampion12.png" alt="lampion 12" loading="lazy"></a>-->
+            <!--                <figcaption>Lampion 12</figcaption>-->
+            <!--            </figure>-->
+            <!--            <div class="image-grid hidden-images lampiony-hidden">-->
+            <!--                &lt;!&ndash; lampion13+ opcjonalnie &ndash;&gt;-->
+            <!--                <figure>-->
+            <!--                    <a href="lampion13.png" class="lightbox"><img src="lampion13.png" alt="lampion 13"-->
+            <!--                                                                  loading="lazy"></a>-->
+            <!--                    <figcaption>Lampion 13</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure>-->
+            <!--                    <a href="lampion14.png" class="lightbox"><img src="lampion14.png" alt="lampion 14"-->
+            <!--                                                                  loading="lazy"></a>-->
+            <!--                    <figcaption>Lampion 14</figcaption>-->
+            <!--                </figure>-->
+            <!--            </div>-->
         </div>
+        <div class="image-grid hidden-images lampiony-hidden" id="lampiony-hidden-grid"></div>
+        <div class="toggle-wrapper">
+            <button class="toggle-button" onclick="toggleImages('lampiony')">Pokaż więcej</button>
+        </div>
+    </section>
 
-        <!-- Sekcja BOMBKI -->
-        <section class="section" id="bombki">
-            <h2>BOMBKI NA STOJAKU</h2>
-            <p>Bombki na stojaku. Ręcznie malowane, wykonane ze szkła. Dostępne w wersjach matowych i połyskujących.</p>
-            <p class="highlight"><strong>2 ROZMIARY<br><br>WIĘKSZY: Stojak 17,5 cm – Kula 15 cm</strong><br><br><strong>MNIEJSZY:
-                Stojak 17,5 cm – Kula 10 cm</strong></p>
-            <div class="image-grid">
-                <figure><a href="bombka1.png" class="lightbox"><img src="bombka1.png" alt="bombka 1" loading="lazy"></a>
-                    <figcaption>Bombka 1</figcaption>
-                </figure>
-                <figure><a href="bombka2.png" class="lightbox"><img src="bombka2.png" alt="bombka 2" loading="lazy"></a>
-                    <figcaption>Bombka 2</figcaption>
-                </figure>
-                <figure><a href="bombka3.png" class="lightbox"><img src="bombka3.png" alt="bombka 3" loading="lazy"></a>
-                    <figcaption>Bombka 3</figcaption>
-                </figure>
-                <figure><a href="bombka4.png" class="lightbox"><img src="bombka4.png" alt="bombka 4" loading="lazy"></a>
-                    <figcaption>Bombka 4</figcaption>
-                </figure>
-                <figure><a href="bombka5.png" class="lightbox"><img src="bombka5.png" alt="bombka 5" loading="lazy"></a>
-                    <figcaption>Bombka 5</figcaption>
-                </figure>
-                <figure><a href="bombka6.png" class="lightbox"><img src="bombka6.png" alt="bombka 6" loading="lazy"></a>
-                    <figcaption>Bombka 6</figcaption>
-                </figure>
-                <figure><a href="bombka7.png" class="lightbox"><img src="bombka7.png" alt="bombka 7" loading="lazy"></a>
-                    <figcaption>Bombka 7</figcaption>
-                </figure>
-                <figure><a href="bombka8.png" class="lightbox"><img src="bombka8.png" alt="bombka 8" loading="lazy"></a>
-                    <figcaption>Bombka 8</figcaption>
-                </figure>
-                <figure><a href="bombka9.png" class="lightbox"><img src="bombka9.png" alt="bombka 9" loading="lazy"></a>
-                    <figcaption>Bombka 9</figcaption>
-                </figure>
-                <figure><a href="bombka10.png" class="lightbox"><img src="bombka10.png" alt="bombka 10" loading="lazy"></a>
-                    <figcaption>Bombka 10</figcaption>
-                </figure>
-                <figure><a href="bombka11.png" class="lightbox"><img src="bombka11.png" alt="bombka 11" loading="lazy"></a>
-                    <figcaption>Bombka 11</figcaption>
-                </figure>
-                <figure><a href="bombka12.png" class="lightbox"><img src="bombka12.png" alt="bombka 12" loading="lazy"></a>
-                    <figcaption>Bombka 12</figcaption>
-                </figure>
-            </div>
-        </section>
+    <!-- Sekcja BOMBKI -->
+    <section class="section" id="bombki">
+        <h2>BOMBKI NA STOJAKU</h2>
+        <p>Bombki na stojaku są ręcznie malowane, wykonane są z wysokiej jakości szkła.
+            Dostępne w wersjach matowych i połyskujących.</p>
+        <p class="highlight"><strong>2 ROZMIARY<br><br>WIĘKSZY: Stojak 17,5 cm – Kula 15 cm</strong><br><br><strong>MNIEJSZY:
+            Stojak 17,5 cm – Kula 10 cm</strong></p>
+        <div class="image-grid" id="bombki-grid">
+            <!--                <figure><a href="bombka1.png" class="lightbox"><img src="bombka1.png" alt="bombka 1" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 1</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka2.png" class="lightbox"><img src="bombka2.png" alt="bombka 2" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 2</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka3.png" class="lightbox"><img src="bombka3.png" alt="bombka 3" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 3</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka4.png" class="lightbox"><img src="bombka4.png" alt="bombka 4" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 4</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka5.png" class="lightbox"><img src="bombka5.png" alt="bombka 5" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 5</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka6.png" class="lightbox"><img src="bombka6.png" alt="bombka 6" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 6</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka7.png" class="lightbox"><img src="bombka7.png" alt="bombka 7" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 7</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka8.png" class="lightbox"><img src="bombka8.png" alt="bombka 8" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 8</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka9.png" class="lightbox"><img src="bombka9.png" alt="bombka 9" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 9</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka10.png" class="lightbox"><img src="bombka10.png" alt="bombka 10" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 10</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka11.png" class="lightbox"><img src="bombka11.png" alt="bombka 11" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 11</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="bombka12.png" class="lightbox"><img src="bombka12.png" alt="bombka 12" loading="lazy"></a>-->
+            <!--                    <figcaption>Bombka 12</figcaption>-->
+            <!--                </figure>-->
+        </div>
+        <div class="image-grid hidden-images bombki-hidden" id="bombki-hidden-grid"></div>
+        <div class="toggle-wrapper">
+            <button class="toggle-button" onclick="toggleImages('bombki')">Pokaż więcej</button>
+        </div>
+    </section>
 
-        <!-- Sekcja FIGURKI -->
-        <section class="section" id="figurki">
-            <h2>FIGURKI ŚWIĄTECZNE</h2>
-            <p>Ręcznie wykonane figurki aniołów i postaci świątecznych. Z ceramiki i żywicy.</p>
-            <p class="highlight">Wysokość: 12–18 cm | Kolory: złoty, biały, czerwony</p>
-            <div class="image-grid">
-                <figure><a href="figurka1.png" class="lightbox"><img src="figurka1.png" alt="Figurka 1" loading="lazy"></a>
-                    <figcaption>Figurka 1</figcaption>
-                </figure>
-                <figure><a href="figurka2.png" class="lightbox"><img src="figurka2.png" alt="Figurka 2" loading="lazy"></a>
-                    <figcaption>Figurka 2</figcaption>
-                </figure>
-                <figure><a href="figurka3.png" class="lightbox"><img src="figurka3.png" alt="Figurka 3" loading="lazy"></a>
-                    <figcaption>Figurka 3</figcaption>
-                </figure>
-                <figure><a href="figurka4.png" class="lightbox"><img src="figurka4.png" alt="Figurka 4" loading="lazy"></a>
-                    <figcaption>Figurka 4</figcaption>
-                </figure>
-                <figure><a href="figurka5.png" class="lightbox"><img src="figurka5.png" alt="Figurka 5" loading="lazy"></a>
-                    <figcaption>Figurka 5</figcaption>
-                </figure>
-                <figure><a href="figurka6.png" class="lightbox"><img src="figurka6.png" alt="Figurka 6" loading="lazy"></a>
-                    <figcaption>Figurka 6</figcaption>
-                </figure>
-                <figure><a href="figurka7.png" class="lightbox"><img src="figurka7.png" alt="Figurka 7" loading="lazy"></a>
-                    <figcaption>Figurka 7</figcaption>
-                </figure>
-                <figure><a href="figurka8.png" class="lightbox"><img src="figurka8.png" alt="Figurka 8" loading="lazy"></a>
-                    <figcaption>Figurka 8</figcaption>
-                </figure>
-                <figure><a href="figurka9.png" class="lightbox"><img src="figurka9.png" alt="Figurka 9" loading="lazy"></a>
-                    <figcaption>Figurka 9</figcaption>
-                </figure>
-                <figure><a href="figurka10.png" class="lightbox"><img src="figurka10.png" alt="Figurka 10"
-                                                                      loading="lazy"></a>
-                    <figcaption>Figurka 10</figcaption>
-                </figure>
-                <figure><a href="figurka11.png" class="lightbox"><img src="figurka11.png" alt="Figurka 11"
-                                                                      loading="lazy"></a>
-                    <figcaption>Figurka 11</figcaption>
-                </figure>
-                <figure><a href="figurka12.png" class="lightbox"><img src="figurka12.png" alt="Figurka 12"
-                                                                      loading="lazy"></a>
-                    <figcaption>Figurka 12</figcaption>
-                </figure>
-            </div>
-        </section>
+    <!-- Sekcja FIGURKI -->
+    <section class="section" id="figurki">
+        <h2>FIGURKI ŚWIĄTECZNE</h2>
+        <p>Ręcznie malowane bombki w różnych kształtach, wykonane są z wysokiej jakości szkła.
+            Bombki sprzedawane są bez haczyków. Przykłady bombek
+            dopasowanych do Państwa branży lub preferencji prześlemy po otrzymaniu wstępnego zainteresowania.
+            Mamy w ofercie +100 rodzajów bombek.</p>
+        <p class="highlight"><strong>Wysokość: 4–18 cm <br> <BR> Kolory: złoty, biały, czerwony</strong></p>
+        <div class="image-grid" id="figurki-grid">
+            <!--                <figure><a href="figurka1.png" class="lightbox"><img src="figurka1.png" alt="Figurka 1" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 1</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka2.png" class="lightbox"><img src="figurka2.png" alt="Figurka 2" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 2</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka3.png" class="lightbox"><img src="figurka3.png" alt="Figurka 3" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 3</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka4.png" class="lightbox"><img src="figurka4.png" alt="Figurka 4" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 4</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka5.png" class="lightbox"><img src="figurka5.png" alt="Figurka 5" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 5</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka6.png" class="lightbox"><img src="figurka6.png" alt="Figurka 6" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 6</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka7.png" class="lightbox"><img src="figurka7.png" alt="Figurka 7" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 7</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka8.png" class="lightbox"><img src="figurka8.png" alt="Figurka 8" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 8</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka9.png" class="lightbox"><img src="figurka9.png" alt="Figurka 9" loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 9</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka10.png" class="lightbox"><img src="figurka10.png" alt="Figurka 10"-->
+            <!--                                                                      loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 10</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka11.png" class="lightbox"><img src="figurka11.png" alt="Figurka 11"-->
+            <!--                                                                      loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 11</figcaption>-->
+            <!--                </figure>-->
+            <!--                <figure><a href="figurka12.png" class="lightbox"><img src="figurka12.png" alt="Figurka 12"-->
+            <!--                                                                      loading="lazy"></a>-->
+            <!--                    <figcaption>Figurka 12</figcaption>-->
+            <!--                </figure>-->
+        </div>
+        <div class="image-grid hidden-images figurki-hidden" id="figurki-hidden-grid"></div>
+        <div class="toggle-wrapper">
+            <button class="toggle-button" onclick="toggleImages('figurki')">Pokaż więcej</button>
+        </div>
+    </section>
     </section>
 
     <section class="section" id="bombki-z-logo">
         <h2>BOMBKI Z LOGO FIRMY</h2>
         <p>Bombki reklamowe z nadrukiem logo Twojej firmy. Świetny prezent dla klientów i partnerów biznesowych.</p>
-        <p class="highlight">Dostępne rozmiary: 80 mm, 100 mm, 120 mm | Kolory i zdobienia ustalane indywidualnie.</p>
+        <p class="highlight"><strong>Dostępne rozmiary: 80 mm, 100 mm, 120 mm <br><br> Kolory i zdobienia ustalane
+            indywidualnie.</strong></p>
 
         <div class="logo-grid">
             <figure><a href="logo1.png" class="lightbox"><img src="logo1.png" alt="Bombka logo 1" loading="lazy"></a>
@@ -211,7 +227,8 @@
     <section class="section gift">
         <div class="gift-wrapper">
             <div class="gift-text">
-                <p>Na życzenie możemy zapakować bombki i figurki<br>w estetyczne opakowanie prezentowe.</p>
+                <p><strong>Na życzenie możemy zapakować bombki i figurki<br>w estetyczne opakowanie prezentowe.</strong>
+                </p>
             </div>
             <div class="gift-image">
                 <img src="prezent.png" alt="Przykład opakowania"/>
