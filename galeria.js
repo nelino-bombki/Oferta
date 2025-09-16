@@ -10,15 +10,15 @@ function toggleImages(sectionId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // LIGHTBOX
+  // LIGHTBOX (używamy lightboxImg zamiast img)
   const overlay = document.createElement('div');
   overlay.className = 'lightbox-overlay';
 
   const content = document.createElement('div');
   content.className = 'lightbox-content';
 
-  const img = document.createElement('img');
-  content.appendChild(img);
+  const lightboxImg = document.createElement('img');
+  content.appendChild(lightboxImg);
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'lightbox-close';
@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function setupLightbox(link) {
     link.addEventListener('click', e => {
       e.preventDefault();
-      img.src = '';
+      lightboxImg.src = '';
       overlay.classList.add('active');
       setTimeout(() => {
-        img.src = link.getAttribute('href');
+        lightboxImg.src = link.getAttribute('href');
         resetZoom();
       }, 50);
     });
@@ -47,16 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function close() {
     overlay.classList.remove('active');
-    img.src = '';
+    lightboxImg.src = '';
     resetZoom();
   }
 
-  // Zoom i przesuwanie
+  // Zoom i przesuwanie (dla lightboxImg)
   let scale = 1;
   let posX = 0, posY = 0;
   let isDragging = false, startX = 0, startY = 0;
 
-  img.addEventListener('wheel', e => {
+  lightboxImg.addEventListener('wheel', e => {
     e.preventDefault();
     scale += e.deltaY < 0 ? 0.2 : -0.2;
     scale = Math.max(1, Math.min(3, scale));
@@ -64,17 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTransform();
   });
 
-  img.addEventListener('mousedown', e => {
+  lightboxImg.addEventListener('mousedown', e => {
     if (scale === 1) return;
     isDragging = true;
     startX = e.clientX - posX;
     startY = e.clientY - posY;
-    img.style.cursor = 'grabbing';
+    lightboxImg.style.cursor = 'grabbing';
   });
 
   window.addEventListener('mouseup', () => {
     isDragging = false;
-    img.style.cursor = scale > 1 ? 'grab' : 'default';
+    lightboxImg.style.cursor = scale > 1 ? 'grab' : 'default';
   });
 
   window.addEventListener('mousemove', e => {
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function applyTransform() {
-    img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+    lightboxImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
   }
 
   function resetPosition() {
@@ -97,164 +97,178 @@ document.addEventListener('DOMContentLoaded', () => {
     scale = 1;
     resetPosition();
     applyTransform();
-    img.style.cursor = 'default';
+    lightboxImg.style.cursor = 'default';
   }
 
   // 🔽 Dynamiczne ładowanie figurek
-const figurkiContainer = document.getElementById("figurki-grid");
-const figurkiHiddenContainer = document.getElementById("figurki-hidden-grid");
+  const figurkiContainer = document.getElementById("figurki-grid");
+  const figurkiHiddenContainer = document.getElementById("figurki-hidden-grid");
 
-if (figurkiContainer && figurkiHiddenContainer) {
-  let i = 1;
-  const visibleCount = 12;
-  const maxImages = 50; // maksymalna liczba plików do sprawdzenia
+  if (figurkiContainer && figurkiHiddenContainer) {
+    let i = 1;
+    const visibleCount = 12;
+    const maxImages = 50; // zmień jeśli masz więcej niż 50 plików
 
-  function loadNextImage() {
-    if (i > maxImages) return;
-
-    const img = new Image();
-    img.src = `figurka${i}.png`;
-
-    img.onload = () => {
-      const figure = document.createElement("figure");
-
-      const link = document.createElement("a");
-      link.href = img.src;
-      link.classList.add("lightbox");
-
-      img.alt = `Figurka ${i}`;
-      img.loading = "lazy";
-
-      const caption = document.createElement("figcaption");
-      caption.textContent = `Figurka ${i}`;
-
-      link.appendChild(img);
-      figure.appendChild(link);
-      figure.appendChild(caption);
-
-      if (i <= visibleCount) {
-        figurkiContainer.appendChild(figure);
-      } else {
-        figurkiHiddenContainer.appendChild(figure);
+    function loadNextImage() {
+      if (i > maxImages) {
+        console.log(`✔️ Sprawdziłem do figurka${i - 1}.png`);
+        return;
       }
 
-      setupLightbox(link);
-      i++;
-      loadNextImage();
-    };
+      const loader = new Image();
+      const src = `figurka${i}.png`;
 
-    img.onerror = () => {
-      console.warn(`❌ Brak pliku: figurka${i}.png – pomijam`);
-      i++;
-      loadNextImage(); // idź dalej
-    };
+      loader.onload = () => {
+        const figure = document.createElement("figure");
+        const link = document.createElement("a");
+        link.href = src;
+        link.classList.add("lightbox");
+
+        loader.alt = `Figurka ${i}`;
+        loader.loading = "lazy";
+
+        const caption = document.createElement("figcaption");
+        caption.textContent = `Figurka ${i}`;
+
+        link.appendChild(loader);
+        figure.appendChild(link);
+        figure.appendChild(caption);
+
+        if (i <= visibleCount) {
+          figurkiContainer.appendChild(figure);
+        } else {
+          figurkiHiddenContainer.appendChild(figure);
+        }
+
+        setupLightbox(link);
+        i++;
+        loadNextImage();
+      };
+
+      loader.onerror = () => {
+        console.warn(`❌ Brak pliku: ${src} – pomijam`);
+        i++;
+        loadNextImage(); // kontynuujemy mimo błędu
+      };
+
+      loader.src = src;
+    }
+
+    loadNextImage();
   }
 
-  loadNextImage();
-}
+  // 🔽 Dynamiczne ładowanie bombek
+  const bombkiContainer = document.getElementById("bombki-grid");
+  const bombkiHiddenContainer = document.getElementById("bombki-hidden-grid");
 
-// 🔽 Dynamiczne ładowanie bombek
-const bombkiContainer = document.getElementById("bombki-grid");
-const bombkiHiddenContainer = document.getElementById("bombki-hidden-grid");
+  if (bombkiContainer && bombkiHiddenContainer) {
+    let i = 1;
+    const visibleCount = 12;
+    const maxImages = 50;
 
-if (bombkiContainer && bombkiHiddenContainer) {
-  let i = 1;
-  const visibleCount = 12;
-  const maxImages = 50;
-
-  function loadNextBombka() {
-    if (i > maxImages) return;
-
-    const img = new Image();
-    img.src = `bombka${i}.png`;
-
-    img.onload = () => {
-      const figure = document.createElement("figure");
-
-      const link = document.createElement("a");
-      link.href = img.src;
-      link.classList.add("lightbox");
-
-      img.alt = `Bombka ${i}`;
-      img.loading = "lazy";
-
-      const caption = document.createElement("figcaption");
-      caption.textContent = `Bombka ${i}`;
-
-      link.appendChild(img);
-      figure.appendChild(link);
-      figure.appendChild(caption);
-
-      if (i <= visibleCount) {
-        bombkiContainer.appendChild(figure);
-      } else {
-        bombkiHiddenContainer.appendChild(figure);
+    function loadNextBombka() {
+      if (i > maxImages) {
+        console.log(`✔️ Sprawdziłem do bombka${i - 1}.png`);
+        return;
       }
 
-      setupLightbox(link);
-      i++;
-      loadNextBombka();
-    };
+      const loader = new Image();
+      const src = `bombka${i}.png`;
 
-    img.onerror = () => {
-      console.warn(`❌ Brak pliku: bombka${i}.png – pomijam`);
-      i++;
-      loadNextBombka();
-    };
+      loader.onload = () => {
+        const figure = document.createElement("figure");
+        const link = document.createElement("a");
+        link.href = src;
+        link.classList.add("lightbox");
+
+        loader.alt = `Bombka ${i}`;
+        loader.loading = "lazy";
+
+        const caption = document.createElement("figcaption");
+        caption.textContent = `Bombka ${i}`;
+
+        link.appendChild(loader);
+        figure.appendChild(link);
+        figure.appendChild(caption);
+
+        if (i <= visibleCount) {
+          bombkiContainer.appendChild(figure);
+        } else {
+          bombkiHiddenContainer.appendChild(figure);
+        }
+
+        setupLightbox(link);
+        i++;
+        loadNextBombka();
+      };
+
+      loader.onerror = () => {
+        console.warn(`❌ Brak pliku: ${src} – pomijam`);
+        i++;
+        loadNextBombka();
+      };
+
+      loader.src = src;
+    }
+
+    loadNextBombka();
   }
 
-  loadNextBombka();
-}
+  // 🔽 Dynamiczne ładowanie lampionów
+  const lampionContainer = document.getElementById("lampiony-grid");
+  const lampionHiddenContainer = document.getElementById("lampiony-hidden-grid");
 
-// 🔽 Dynamiczne ładowanie lampionów
-const lampionContainer = document.getElementById("lampiony-grid");
-const lampionHiddenContainer = document.getElementById("lampiony-hidden-grid");
+  if (lampionContainer && lampionHiddenContainer) {
+    let i = 1;
+    const visibleCount = 12;
+    const maxImages = 50;
 
-if (lampionContainer && lampionHiddenContainer) {
-  let i = 1;
-  const visibleCount = 12;
-  const maxImages = 50;
-
-  function loadNextLampion() {
-    if (i > maxImages) return;
-
-    const img = new Image();
-    img.src = `lampion${i}.png`;
-
-    img.onload = () => {
-      const figure = document.createElement("figure");
-
-      const link = document.createElement("a");
-      link.href = img.src;
-      link.classList.add("lightbox");
-
-      img.alt = `Świecznik ${i}`;
-      img.loading = "lazy";
-
-      const caption = document.createElement("figcaption");
-      caption.textContent = `Świecznik ${i}`;
-
-      link.appendChild(img);
-      figure.appendChild(link);
-      figure.appendChild(caption);
-
-      if (i <= visibleCount) {
-        lampionContainer.appendChild(figure);
-      } else {
-        lampionHiddenContainer.appendChild(figure);
+    function loadNextLampion() {
+      if (i > maxImages) {
+        console.log(`✔️ Sprawdziłem do lampion${i - 1}.png`);
+        return;
       }
 
-      setupLightbox(link);
-      i++;
-      loadNextLampion();
-    };
+      const loader = new Image();
+      const src = `lampion${i}.png`;
 
-    img.onerror = () => {
-      console.warn(`❌ Brak pliku: lampion${i}.png – pomijam`);
-      i++;
-      loadNextLampion();
-    };
+      loader.onload = () => {
+        const figure = document.createElement("figure");
+        const link = document.createElement("a");
+        link.href = src;
+        link.classList.add("lightbox");
+
+        loader.alt = `Świecznik ${i}`;
+        loader.loading = "lazy";
+
+        const caption = document.createElement("figcaption");
+        caption.textContent = `Świecznik ${i}`;
+
+        link.appendChild(loader);
+        figure.appendChild(link);
+        figure.appendChild(caption);
+
+        if (i <= visibleCount) {
+          lampionContainer.appendChild(figure);
+        } else {
+          lampionHiddenContainer.appendChild(figure);
+        }
+
+        setupLightbox(link);
+        i++;
+        loadNextLampion();
+      };
+
+      loader.onerror = () => {
+        console.warn(`❌ Brak pliku: ${src} – pomijam`);
+        i++;
+        loadNextLampion();
+      };
+
+      loader.src = src;
+    }
+
+    loadNextLampion();
   }
 
-  loadNextLampion();
-}
+}); // koniec DOMContentLoaded
