@@ -101,62 +101,70 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 🔽 Dynamiczne ładowanie figurek
-  const figurkiContainer = document.getElementById("figurki-grid");
-  const figurkiHiddenContainer = document.getElementById("figurki-hidden-grid");
+const figurkiContainer = document.getElementById("figurki-grid");
+const figurkiHiddenContainer = document.getElementById("figurki-hidden-grid");
 
-  if (figurkiContainer && figurkiHiddenContainer) {
-    let i = 1;
-    const visibleCount = 12;
+if (figurkiContainer && figurkiHiddenContainer) {
+  let i = 1;
+  const visibleCount = 12;
+  const maxImages = 50; // maksymalna liczba plików do sprawdzenia
 
-    function loadNextImage() {
-      const img = new Image();
-      img.src = `figurka${i}.png`;
+  function loadNextImage() {
+    if (i > maxImages) return;
 
-      img.onload = () => {
-        const figure = document.createElement("figure");
+    const img = new Image();
+    img.src = `figurka${i}.png`;
 
-        const link = document.createElement("a");
-        link.href = img.src;
-        link.classList.add("lightbox");
+    img.onload = () => {
+      const figure = document.createElement("figure");
 
-        img.alt = `Figurka ${i}`;
-        img.loading = "lazy";
+      const link = document.createElement("a");
+      link.href = img.src;
+      link.classList.add("lightbox");
 
-        const caption = document.createElement("figcaption");
-        caption.textContent = `Figurka ${i}`;
+      img.alt = `Figurka ${i}`;
+      img.loading = "lazy";
 
-        link.appendChild(img);
-        figure.appendChild(link);
-        figure.appendChild(caption);
+      const caption = document.createElement("figcaption");
+      caption.textContent = `Figurka ${i}`;
 
-        if (i <= visibleCount) {
-          figurkiContainer.appendChild(figure);
-        } else {
-          figurkiHiddenContainer.appendChild(figure);
-        }
+      link.appendChild(img);
+      figure.appendChild(link);
+      figure.appendChild(caption);
 
-        setupLightbox(link);
-        i++;
-        loadNextImage();
-      };
+      if (i <= visibleCount) {
+        figurkiContainer.appendChild(figure);
+      } else {
+        figurkiHiddenContainer.appendChild(figure);
+      }
 
-      img.onerror = () => {
-        console.log(`✔️ Wczytano ${i - 1} zdjęć figurek.`);
-      };
-    }
+      setupLightbox(link);
+      i++;
+      loadNextImage();
+    };
 
-    loadNextImage();
+    img.onerror = () => {
+      console.warn(`❌ Brak pliku: figurka${i}.png – pomijam`);
+      i++;
+      loadNextImage(); // idź dalej
+    };
   }
 
-  // 🔽 Dynamiczne ładowanie bombek
+  loadNextImage();
+}
+
+// 🔽 Dynamiczne ładowanie bombek
 const bombkiContainer = document.getElementById("bombki-grid");
 const bombkiHiddenContainer = document.getElementById("bombki-hidden-grid");
 
 if (bombkiContainer && bombkiHiddenContainer) {
   let i = 1;
   const visibleCount = 12;
+  const maxImages = 50;
 
   function loadNextBombka() {
+    if (i > maxImages) return;
+
     const img = new Image();
     img.src = `bombka${i}.png`;
 
@@ -189,7 +197,9 @@ if (bombkiContainer && bombkiHiddenContainer) {
     };
 
     img.onerror = () => {
-      console.log(`✔️ Wczytano ${i - 1} zdjęć bombek.`);
+      console.warn(`❌ Brak pliku: bombka${i}.png – pomijam`);
+      i++;
+      loadNextBombka();
     };
   }
 
@@ -197,15 +207,17 @@ if (bombkiContainer && bombkiHiddenContainer) {
 }
 
 // 🔽 Dynamiczne ładowanie lampionów
-  // 🔽 Dynamiczne ładowanie bombek
 const lampionContainer = document.getElementById("lampiony-grid");
 const lampionHiddenContainer = document.getElementById("lampiony-hidden-grid");
 
 if (lampionContainer && lampionHiddenContainer) {
   let i = 1;
   const visibleCount = 12;
+  const maxImages = 50;
 
   function loadNextLampion() {
+    if (i > maxImages) return;
+
     const img = new Image();
     img.src = `lampion${i}.png`;
 
@@ -238,11 +250,11 @@ if (lampionContainer && lampionHiddenContainer) {
     };
 
     img.onerror = () => {
-      console.log(`✔️ Wczytano ${i - 1} zdjęć bombek.`);
+      console.warn(`❌ Brak pliku: lampion${i}.png – pomijam`);
+      i++;
+      loadNextLampion();
     };
   }
 
   loadNextLampion();
 }
-
-});
