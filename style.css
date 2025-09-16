@@ -432,6 +432,11 @@ footer p {
 
 /* Styl lightbox - tło i pozycjonowanie */
 /* galeria.css */
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
 .image-grid figure {
   margin: 0;
