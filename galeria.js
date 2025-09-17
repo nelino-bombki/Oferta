@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     containerId: "figurki-grid",
     hiddenId: "figurki-hidden-grid",
     prefix: "figurka",
-    folders: ["images/figurki", "images/figurka", "."], // spróbuje po kolei
+    folders: ["images/figurki", "images/figurka"], // spróbuje po kolei
     visibleCount: 12,
     maxImages: 150,
     ext: "png"
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     containerId: "bombki-grid",
     hiddenId: "bombki-hidden-grid",
     prefix: "bombka",
-    folders: ["images/bombki", "images/bombka", "."],
+    folders: ["images/bombki", "images/bombka"],
     visibleCount: 12,
     maxImages: 50,
     ext: "png"
@@ -209,10 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
     containerId: "lampiony-grid",
     hiddenId: "lampiony-hidden-grid",
     prefix: "lampion",
-    folders: ["images/lampiony", "images/lampion", "."],
+    folders: ["images/lampiony", "images/lampion"],
     visibleCount: 12,
     maxImages: 50,
     ext: "png"
   });
 
 }); // koniec DOMContentLoaded
+
