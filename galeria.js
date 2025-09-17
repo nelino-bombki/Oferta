@@ -1,7 +1,6 @@
 function toggleImages(sectionId) {
   const hiddenSection = document.querySelector(`#${sectionId} .${sectionId}-hidden`);
   const button = document.querySelector(`#${sectionId} .toggle-button`);
-
   if (!hiddenSection || !button) return;
 
   const isHidden = hiddenSection.classList.contains('hidden-images');
@@ -10,7 +9,7 @@ function toggleImages(sectionId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // LIGHTBOX (używamy lightboxImg zamiast img)
+  // ---------------- Lightbox (overlay + zoom) ----------------
   const overlay = document.createElement('div');
   overlay.className = 'lightbox-overlay';
 
@@ -33,23 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       lightboxImg.src = '';
       overlay.classList.add('active');
+      // krótkie opóźnienie żeby overlay się pokazał zanim zaczniemy wczytywać zdjęcie (ładniejsze)
       setTimeout(() => {
+        // używamy pełnej, względnej ścieżki (może być 'img/...')
         lightboxImg.src = link.getAttribute('href');
         resetZoom();
       }, 50);
     });
   }
 
-  closeBtn.addEventListener('click', close);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) close();
-  });
-
   function close() {
     overlay.classList.remove('active');
     lightboxImg.src = '';
     resetZoom();
   }
+
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
 
   // Zoom i przesuwanie (dla lightboxImg)
   let scale = 1;
@@ -58,7 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   lightboxImg.addEventListener('wheel', e => {
     e.preventDefault();
-    scale += e.deltaY < 0 ? 0.2 : -0.2;
+    // delikatniejszy zoom
+    scale += e.deltaY < 0 ? 0.15 : -0.15;
     scale = Math.max(1, Math.min(3, scale));
     if (scale === 1) resetPosition();
     applyTransform();
@@ -100,175 +102,117 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxImg.style.cursor = 'default';
   }
 
-  // 🔽 Dynamiczne ładowanie figurek
-  const figurkiContainer = document.getElementById("figurki-grid");
-  const figurkiHiddenContainer = document.getElementById("figurki-hidden-grid");
+  // ---------------- uniwersalny loader galerii (robust) ----------------
+  /**
+   * options:
+   *  - containerId: id widocznego kontenera (np. "figurki-grid")
+   *  - hiddenId: id kontenera ukrytego (np. "figurki-hidden-grid")
+   *  - prefix: "figurka" (dla plików typu figurka1.png)
+   *  - folders: array of folder paths to try, e.g. ['img/figurki','img/figurka','.']
+   *  - visibleCount, maxImages, ext
+   */
+  function loadGallery({ containerId, hiddenId, prefix, folders = ['.'], visibleCount = 12, maxImages = 150, ext = 'png' }) {
+    const container = document.getElementById(containerId);
+    const hidden = document.getElementById(hiddenId);
+    if (!container || !hidden) {
+      console.warn(`Galeria: brak kontenerów dla ${containerId} / ${hiddenId}`);
+      return;
+    }
 
-  if (figurkiContainer && figurkiHiddenContainer) {
-    let i = 1;
-    const visibleCount = 12;
-    const maxImages = 50; // zmień jeśli masz więcej niż 50 plików
+    // upewnij się że folders to array
+    if (!Array.isArray(folders)) folders = [folders];
 
-    function loadNextImage() {
-      if (i > maxImages) {
-        console.log(`✔️ Sprawdziłem do figurka${i - 1}.png`);
+    let index = 1;
+
+    // rekurencyjna próba dla danego indexu i kolejnych folderów
+    function tryLoad(currentIndex, folderIndex = 0) {
+      if (currentIndex > maxImages) {
+        console.log(`✔️ Sprawdziłem do ${prefix}${currentIndex - 1}.${ext}`);
         return;
       }
 
-      const loader = new Image();
-      const src = `figurka${i}.png`;
+      // normalizacja folderu (usuń slashe na końcu/początku)
+      let folder = (folders[folderIndex] || '.').toString().replace(/^\/|\/$/g, '');
+      const src = folder === '.' ? `${prefix}${currentIndex}.${ext}` : `${folder}/${prefix}${currentIndex}.${ext}`;
 
-      loader.onload = () => {
-        const figure = document.createElement("figure");
-        const link = document.createElement("a");
+      const img = new Image();
+      img.onload = () => {
+        // gotowe: utwórz elementy i dodaj do DOM
+        const figure = document.createElement('figure');
+        const link = document.createElement('a');
+        // używamy a.href jako dokładnej ścieżki, żeby lightbox mógł wczytać
         link.href = src;
-        link.classList.add("lightbox");
+        link.classList.add('lightbox');
 
-        loader.alt = `Figurka ${i}`;
-        loader.loading = "lazy";
+        img.alt = `${prefix} ${currentIndex}`;
+        img.loading = 'lazy';
 
-        const caption = document.createElement("figcaption");
-        caption.textContent = `Figurka ${i}`;
+        const caption = document.createElement('figcaption');
+        caption.textContent = `${prefix} ${currentIndex}`;
 
-        link.appendChild(loader);
+        link.appendChild(img);
         figure.appendChild(link);
         figure.appendChild(caption);
 
-        if (i <= visibleCount) {
-          figurkiContainer.appendChild(figure);
+        if (currentIndex <= visibleCount) container.appendChild(figure);
+        else hidden.appendChild(figure);
+
+        // podłącz lightbox
+        if (typeof setupLightbox === 'function') setupLightbox(link);
+
+        // idziemy do następnego obrazka (zaczynając z powrotem od pierwszego folderu)
+        tryLoad(currentIndex + 1, 0);
+      };
+
+      img.onerror = () => {
+        // jeśli są jeszcze foldery do sprawdzenia dla tego numeru -> spróbuj następnego
+        if (folderIndex + 1 < folders.length) {
+          tryLoad(currentIndex, folderIndex + 1);
         } else {
-          figurkiHiddenContainer.appendChild(figure);
+          // nie znaleziono obrazka w żadnym folderze -> pomiń i idź dalej
+          console.warn(`❌ Brak pliku: ${src} – pomijam`);
+          tryLoad(currentIndex + 1, 0);
         }
-
-        setupLightbox(link);
-        i++;
-        loadNextImage();
       };
 
-      loader.onerror = () => {
-        console.warn(`❌ Brak pliku: ${src} – pomijam`);
-        i++;
-        loadNextImage(); // kontynuujemy mimo błędu
-      };
-
-      loader.src = src;
+      // ustawienie src powoduje start ładowania
+      img.src = src;
     }
 
-    loadNextImage();
+    // start
+    tryLoad(index, 0);
   }
 
-  // 🔽 Dynamiczne ładowanie bombek
-  const bombkiContainer = document.getElementById("bombki-grid");
-  const bombkiHiddenContainer = document.getElementById("bombki-hidden-grid");
+  // ---------------- wywołania dla Twoich galerii (spróbuj różnych nazw folderów) ----------------
+  // WAŻNE: dopasuj listę 'folders' do tego co masz w repo. Poniżej są typowe warianty (pl i ang).
+  loadGallery({
+    containerId: "figurki-grid",
+    hiddenId: "figurki-hidden-grid",
+    prefix: "figurka",
+    folders: ["figurki", "figurka", "."], // spróbuje po kolei
+    visibleCount: 12,
+    maxImages: 150,
+    ext: "png"
+  });
 
-  if (bombkiContainer && bombkiHiddenContainer) {
-    let i = 1;
-    const visibleCount = 12;
-    const maxImages = 50;
+  loadGallery({
+    containerId: "bombki-grid",
+    hiddenId: "bombki-hidden-grid",
+    prefix: "bombka",
+    folders: ["bombki", "bombka", "."],
+    visibleCount: 12,
+    maxImages: 50,
+    ext: "png"
+  });
 
-    function loadNextBombka() {
-      if (i > maxImages) {
-        console.log(`✔️ Sprawdziłem do bombka${i - 1}.png`);
-        return;
-      }
-
-      const loader = new Image();
-      const src = `bombka${i}.png`;
-
-      loader.onload = () => {
-        const figure = document.createElement("figure");
-        const link = document.createElement("a");
-        link.href = src;
-        link.classList.add("lightbox");
-
-        loader.alt = `Bombka ${i}`;
-        loader.loading = "lazy";
-
-        const caption = document.createElement("figcaption");
-        caption.textContent = `Bombka ${i}`;
-
-        link.appendChild(loader);
-        figure.appendChild(link);
-        figure.appendChild(caption);
-
-        if (i <= visibleCount) {
-          bombkiContainer.appendChild(figure);
-        } else {
-          bombkiHiddenContainer.appendChild(figure);
-        }
-
-        setupLightbox(link);
-        i++;
-        loadNextBombka();
-      };
-
-      loader.onerror = () => {
-        console.warn(`❌ Brak pliku: ${src} – pomijam`);
-        i++;
-        loadNextBombka();
-      };
-
-      loader.src = src;
-    }
-
-    loadNextBombka();
-  }
-
-  // 🔽 Dynamiczne ładowanie lampionów
-  const lampionContainer = document.getElementById("lampiony-grid");
-  const lampionHiddenContainer = document.getElementById("lampiony-hidden-grid");
-
-  if (lampionContainer && lampionHiddenContainer) {
-    let i = 1;
-    const visibleCount = 12;
-    const maxImages = 50;
-
-    function loadNextLampion() {
-      if (i > maxImages) {
-        console.log(`✔️ Sprawdziłem do lampion${i - 1}.png`);
-        return;
-      }
-
-      const loader = new Image();
-      const src = `lampion${i}.png`;
-
-      loader.onload = () => {
-        const figure = document.createElement("figure");
-        const link = document.createElement("a");
-        link.href = src;
-        link.classList.add("lightbox");
-
-        loader.alt = `Świecznik ${i}`;
-        loader.loading = "lazy";
-
-        const caption = document.createElement("figcaption");
-        caption.textContent = `Świecznik ${i}`;
-
-        link.appendChild(loader);
-        figure.appendChild(link);
-        figure.appendChild(caption);
-
-        if (i <= visibleCount) {
-          lampionContainer.appendChild(figure);
-        } else {
-          lampionHiddenContainer.appendChild(figure);
-        }
-
-        setupLightbox(link);
-        i++;
-        loadNextLampion();
-      };
-
-      loader.onerror = () => {
-        console.warn(`❌ Brak pliku: ${src} – pomijam`);
-        i++;
-        loadNextLampion();
-      };
-
-      loader.src = src;
-    }
-
-    loadNextLampion();
-  }
+  loadGallery({
+    containerId: "lampiony-grid",
+    hiddenId: "lampiony-hidden-grid",
+    prefix: "lampion",
+    folders: ["lampiony", "lampion", "."],
+    visibleCount: 12,
+    maxImages: 50,
+    ext: "png"
+  });
 
 }); // koniec DOMContentLoaded
