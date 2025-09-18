@@ -186,10 +186,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------- wywołania dla Twoich galerii (spróbuj różnych nazw folderów) ----------------
   // WAŻNE: dopasuj listę 'folders' do tego co masz w repo. Poniżej są typowe warianty (pl i ang).
   loadGallery({
-    containerId: "figurki-grid",
-    hiddenId: "figurki-hidden-grid",
+    containerId: "figurki-rodzaj1-grid",
+    hiddenId: "figurki-rodzaj1-hidden-grid",
     prefix: "figurka",
-    folders: ["images/figurki", "images/figurka"], // spróbuje po kolei
+    folders: ["images/figurki/rodzaj1", "images/figurka/rodzaj1"], // spróbuje po kolei
+    visibleCount: 12,
+    maxImages: 150,
+    ext: "png"
+  });
+
+  loadGallery({
+    containerId: "figurki-rodzaj2-grid",
+    hiddenId: "figurki-rodzaj2-hidden-grid",
+    prefix: "figurka",
+    folders: ["images/figurki/rodzaj2", "images/figurka/rodzaj2"], // spróbuje po kolei
+    visibleCount: 12,
+    maxImages: 150,
+    ext: "png"
+  });
+
+  loadGallery({
+    containerId: "figurki-rodzaj3-grid",
+    hiddenId: "figurki-rodzaj3-hidden-grid",
+    prefix: "figurka",
+    folders: ["images/figurki/rodzaj3", "images/figurka/rodzaj3"], // spróbuje po kolei
+    visibleCount: 12,
+    maxImages: 150,
+    ext: "png"
+  });
+
+  loadGallery({
+    containerId: "figurki-rodzaj4-grid",
+    hiddenId: "figurki-rodzaj4-hidden-grid",
+    prefix: "figurka",
+    folders: ["images/figurki/rodzaj4", "images/figurka/rodzaj4"], // spróbuje po kolei
     visibleCount: 12,
     maxImages: 150,
     ext: "png"
@@ -216,4 +246,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 }); // koniec DOMContentLoaded
-
