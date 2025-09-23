@@ -1,5 +1,5 @@
 function toggleImages(sectionId) {
-  const hiddenSection = document.querySelector(`#${sectionId} .${sectionId}-hidden`);
+  const hiddenSection = document.querySelector(`#${sectionId}-hidden-grid`);
   const button = document.querySelector(`#${sectionId} .toggle-button`);
   if (!hiddenSection || !button) return;
 
