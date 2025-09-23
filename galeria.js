@@ -1,11 +1,45 @@
-function toggleImages(sectionId) {
-  const hiddenSection = document.querySelector(`#${sectionId}-hidden-grid`);
-  const button = document.querySelector(`#${sectionId} .toggle-button`);
-  if (!hiddenSection || !button) return;
+// === NOWA, PROSTA WERSJA: toggle tylko dla powiązanego hidden-grid ===
+function toggleImagesByButton(button) {
+  const wrapper = button.closest('.toggle-wrapper') || button.parentElement;
+  let candidate = wrapper ? wrapper.previousElementSibling : null;
 
-  const isHidden = hiddenSection.classList.contains('hidden-images');
-  hiddenSection.classList.toggle('hidden-images');
-  button.textContent = isHidden ? 'Pokaż mniej' : 'Pokaż więcej';
+  // szukamy poprzedniego sibling, który jest ukrytym gridem
+  while (candidate) {
+    if (candidate.classList && (candidate.classList.contains('hidden-images') || (candidate.id && candidate.id.endsWith('-hidden-grid')))) {
+      break;
+    }
+    candidate = candidate.previousElementSibling;
+  }
+
+  // fallback: w obrębie sekcji znajdź pierwszy pasujący
+  if (!candidate) {
+    const section = button.closest('section') || document;
+    candidate = section.querySelector('[id$="-hidden-grid"], .hidden-images');
+  }
+
+  if (!candidate) {
+    console.warn('toggleImages: nie znaleziono ukrytego kontenera dla przycisku', button);
+    return;
+  }
+
+  const wasHidden = candidate.classList.contains('hidden-images');
+  candidate.classList.toggle('hidden-images');
+  button.textContent = wasHidden ? 'Pokaż mniej' : 'Pokaż więcej';
+}
+
+function initToggleButtons() {
+  document.querySelectorAll('.toggle-button').forEach(btn => {
+    // usuń inline onclick (bezpiecznie)
+    try { btn.removeAttribute('onclick'); } catch(e) {}
+
+    // zapobiegamy dodawaniu listenera wielokrotnie
+    if (btn._toggleInitialized) return;
+    btn._toggleInitialized = true;
+
+    btn.addEventListener('click', () => {
+      toggleImagesByButton(btn);
+    });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
