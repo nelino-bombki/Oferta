@@ -1,12 +1,28 @@
-function toggleImages(sectionId) {
-  const hiddenSection = document.querySelector(`#${sectionId} .${sectionId}-hidden`);
-  const button = document.querySelector(`#${sectionId} .toggle-button`);
-  if (!hiddenSection || !button) return;
+// PROSTA I BEZPIECZNA WERSJA: oczekuje id-prefixu + opcjonalnie przycisku (this)
+function toggleImages(sectionId, btn) {
+  // sectionId powinno być np. "figurki-rodzaj3"
+  const hiddenSection = document.getElementById(`${sectionId}-hidden-grid`);
+  if (!hiddenSection) {
+    console.warn('toggleImages: nie znaleziono ukrytego gridu o id:', `${sectionId}-hidden-grid`);
+    return;
+  }
 
-  const isHidden = hiddenSection.classList.contains('hidden-images');
+  // jeśli przekazano element przycisku (this) - użyj go; fallback: spróbuj znaleźć przycisk obok hiddenSection
+  let button = btn || null;
+  if (!button) {
+    // spróbuj znaleźć toggle-button w następnym sibling / w obrębie tej sekcji
+    button = document.querySelector(`#${sectionId} .toggle-button`) ||
+             hiddenSection.nextElementSibling?.querySelector?.('.toggle-button') ||
+             hiddenSection.parentElement?.querySelector?.('.toggle-button') ||
+             document.querySelector('.toggle-button');
+  }
+
+  // toggle klasy i tekstu guzika
+  const wasHidden = hiddenSection.classList.contains('hidden-images');
   hiddenSection.classList.toggle('hidden-images');
-  button.textContent = isHidden ? 'Pokaż mniej' : 'Pokaż więcej';
+  if (button) button.textContent = wasHidden ? 'Pokaż mniej' : 'Pokaż więcej';
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // ---------------- Lightbox (overlay + zoom) ----------------
